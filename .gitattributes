@@ -1,0 +1,39 @@
+# -----------------------------
+# Normalize line endings for all text files
+# -----------------------------
+* text=auto
+
+# Force LF (Unix style) for code files
+*.js    text eol=lf
+*.jsx   text eol=lf
+*.ts    text eol=lf
+*.tsx   text eol=lf
+*.json  text eol=lf
+*.css   text eol=lf
+*.scss  text eol=lf
+*.html  text eol=lf
+*.md    text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+
+# VS Code project settings
+*.code-workspace text eol=lf
+.vscode/* text eol=lf
+
+# Force CRLF (Windows style) for batch files
+*.bat text eol=crlf
+
+# Mark binary files as binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.zip  binary
+*.pdf  binary
+*.woff binary
+*.woff2 binary
+*.eot  binary
+*.ttf  binary
+*.mp4  binary
+*.mp3  binary

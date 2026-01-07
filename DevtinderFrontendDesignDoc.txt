@@ -1,0 +1,9 @@
+Tools :-
+ vite build tool:  npm create vite@latest <appname>;  cd <appname>;  npm install;   npm run dev
+ versions: nodejs(24.12.0), reactjs(19.2)
+
+ Config files :-
+ .vscode : this folder contains vscode settings for specific project
+ .nvmrc  : it consists Node version.
+ .gitignore: git will ignore mentioned paths.
+ .gitattributes:  git configurations
