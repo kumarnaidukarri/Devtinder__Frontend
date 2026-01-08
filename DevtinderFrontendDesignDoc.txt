@@ -10,4 +10,4 @@ Tools :-
 
 
 Technologies :-
- React, Tailwindcss, DaisyUI components
+ React, Tailwindcss, DaisyUI components, React Router
