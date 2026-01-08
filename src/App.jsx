@@ -23,9 +23,18 @@ function App() {
 
 export default App;
 
-// route structure
+// Route structure:-
 /*
+  Navbar
   Body
     - Home
     - Login
+  Footer
+*/
+
+// URL Paths:-
+/*
+  /       -> Body
+  /home   -> Body with home component
+  /login  -> Body with login component
 */
