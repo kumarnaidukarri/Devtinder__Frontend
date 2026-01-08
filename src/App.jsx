@@ -1,7 +1,11 @@
+import Home from "./components/Home.jsx";
+import Navbar from "./components/Navbar.jsx";
+
 function App() {
   return (
     <>
-      <h1 className="text-green-600">Hello World</h1>
+      <Home />
+      <Navbar />
     </>
   );
 }
