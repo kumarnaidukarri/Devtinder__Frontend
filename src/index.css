@@ -2,4 +2,6 @@
 @import "tailwindcss";
 
 /* DaisyUI Library gives pre-written components as tailwindcss utility classes */
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: all;
+}
