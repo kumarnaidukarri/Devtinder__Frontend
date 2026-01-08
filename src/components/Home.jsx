@@ -1,12 +1,7 @@
 import Navbar from "./Navbar.jsx";
 
 const Home = () => {
-  return (
-    <div>
-      <Navbar />
-      <h1>Home Page</h1>
-    </div>
-  );
+  return <div>Home Page</div>;
 };
 
 export default Home;
