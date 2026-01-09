@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router"; // react router lib
 /* Declarative Mode routing:- it means we use Routing Components to configure routing. */
 
 import Body from "./components/Body.jsx";
-import Home from "./components/Home.jsx";
 import Login from "./components/Login.jsx";
 
 function App() {
@@ -12,7 +11,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Body />}>
             {/* child routes */}
-            <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
           </Route>
         </Routes>
@@ -27,7 +25,6 @@ export default App;
 /*
   Navbar
   Body
-    - Home
     - Login
   Footer
 */
