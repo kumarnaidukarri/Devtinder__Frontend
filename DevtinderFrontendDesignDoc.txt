@@ -11,3 +11,4 @@ Tools :-
 
 Technologies :-
  React, Tailwindcss, DaisyUI components, React Router, Axios
+ React-Redux, Redux-Toolkit
