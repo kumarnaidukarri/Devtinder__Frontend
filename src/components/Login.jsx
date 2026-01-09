@@ -1,10 +1,15 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux"; // redux hooks
 import axios from "axios"; // Axios library for making Http Requests
+
+import { addUser } from "../utils/store/userSlice.js"; // Actions from User Slice of Redux Store
 
 const Login = () => {
   // local state variables
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch(); // useDispatch() hook used to dispatch an Action
 
   // event handler
   const handleLogin = async () => {
@@ -21,7 +26,9 @@ const Login = () => {
          Axios config object "{withCredentials:true}" must be used when making HTTP Requests.
          it tells Axios to send Cookies(browser to server) and accept Cookies(sent by server).
       */
-      console.log("Api call success. data: ", res);
+      console.log("Api call success. data: ", res.data);
+
+      dispatch(addUser(res.data)); // Dispatches an Action
     } catch (err) {
       console.log("my custom error here:");
       console.error(err);
