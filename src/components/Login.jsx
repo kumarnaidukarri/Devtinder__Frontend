@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios"; // Axios library for making Http Requests
 
 const Login = () => {
   // local state variables
@@ -7,9 +8,24 @@ const Login = () => {
 
   // event handler
   const handleLogin = async () => {
-    console.log(
-      "Make API call to backend for login(username, password). Backend will give the JWT token in cookies"
-    );
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/login",
+        {
+          emailId,
+          password,
+        },
+        { withCredentials: true }
+      );
+      /* Note:
+         Axios config object "{withCredentials:true}" must be used when making HTTP Requests.
+         it tells Axios to send Cookies(browser to server) and accept Cookies(sent by server).
+      */
+      console.log("Api call success. data: ", res);
+    } catch (err) {
+      console.log("my custom error here:");
+      console.error(err);
+    }
   };
 
   return (
