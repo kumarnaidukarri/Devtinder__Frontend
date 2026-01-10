@@ -4,6 +4,7 @@ import { useNavigate } from "react-router"; // react router hooks
 import axios from "axios"; // Axios library for making Http Requests
 
 import { addUser } from "../utils/store/userSlice.js"; // Actions from User Slice of Redux Store
+import { BASE_URL } from "../utils/constants.js"; // hard coded data
 
 const Login = () => {
   // local state variables
@@ -17,7 +18,7 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/login",
+        BASE_URL + "/login",
         {
           emailId,
           password,
