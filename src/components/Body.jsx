@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 import { addUser } from "../utils/store/userSlice.js"; // Action from User Slice of Redux Store
@@ -13,9 +13,15 @@ import { useEffect } from "react";
 const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userData = useSelector((appStore) => appStore.user); // Subscribes to User slice of Redux store.
 
   const fetchUser = async () => {
+    if (userData) {
+      return; // if User Data already present. Don't make API call.
+    }
+
     try {
+      // if User data is not present in redux store. then, Make API call and Update Redux Store.
       // Browser sends existing 'JWT token' from cookies to the Server during API call.
       const res = await axios.get(BASE_URL + "/profile/view", {
         withCredentials: true,
@@ -38,7 +44,7 @@ const Body = () => {
   };
 
   useEffect(() => {
-    fetchUser();
+    fetchUser(); // fetch and update user data in redux.
   }, []); // only runs once. after first render
 
   return (
