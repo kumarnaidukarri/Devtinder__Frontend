@@ -43,3 +43,10 @@ export default App;
   /home   -> Body with home component
   /login  -> Body with login component
 */
+
+// *** Page Reload :-
+/*
+  when we reload our react app or page.
+  everything will refresh whole app, components, Redux Store. except our Cookies.
+  so, components are destroyed, re-creates newly, renders.
+ */
