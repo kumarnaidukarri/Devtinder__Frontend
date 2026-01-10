@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux"; // redux hooks
+import { useNavigate } from "react-router"; // react router hooks
 import axios from "axios"; // Axios library for making Http Requests
 
 import { addUser } from "../utils/store/userSlice.js"; // Actions from User Slice of Redux Store
@@ -10,6 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch(); // useDispatch() hook used to dispatch an Action
+  const navigate = useNavigate(); // useNavigate() hook used to Navigate between Paths(routes/pages) in URL programmatically.
 
   // event handler
   const handleLogin = async () => {
@@ -29,6 +31,8 @@ const Login = () => {
       console.log("Api call success. data: ", res.data);
 
       dispatch(addUser(res.data)); // Dispatches an Action
+
+      navigate("/"); // Navigate to another Path
     } catch (err) {
       console.log("my custom error here:");
       console.error(err);
