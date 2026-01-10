@@ -1,4 +1,4 @@
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
@@ -12,6 +12,7 @@ import { useEffect } from "react";
 
 const Body = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fetchUser = async () => {
     try {
@@ -23,6 +24,15 @@ const Body = () => {
 
       dispatch(addUser(user)); // Dispatch an Action - adds User data into Redux store
     } catch (err) {
+      if (err.status === 401) {
+        /* In case, JWT token is deleted/cleared/expired.
+            during API call made, server finds out 'expired or no JWT' token from Cookies.
+            then, Server sends back error (Invalid Token) as response.
+         */
+        navigate("/login"); // navigate to Login Page.
+      }
+
+      // other erros like network failures, failed requests, ...
       console.error(err);
     }
   };
