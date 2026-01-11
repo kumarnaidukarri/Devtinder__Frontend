@@ -7,6 +7,7 @@ import appStore from "./utils/store/appStore.js"; // redux store
 import Body from "./components/Body.jsx";
 import Login from "./components/Login.jsx";
 import Feed from "./components/Feed.jsx";
+import Profile from "./components/Profile.jsx";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
               {/* child routes */}
               <Route path="/" element={<Feed />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/profile" element={<Profile />} />
             </Route>
           </Routes>
         </BrowserRouter>
