@@ -1,9 +1,30 @@
-import { Link } from "react-router";
-import { useSelector } from "react-redux"; // redux hooks
+import { Link, useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux"; // redux hooks
+
+import axios from "axios"; // Axios for http requests instead of Fetch()
+import { BASE_URL } from "../utils/constants"; // hard coded url
+import { removeUser } from "../utils/store/userSlice"; // Action from redux store
 
 const Navbar = () => {
   const user = useSelector((appStore) => appStore.user); // Subscribes to 'User Slice'(specific portion) of Redux Store.
   console.log(user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // event handler
+  const handleLogout = async () => {
+    try {
+      // Browser automatically attaches Cookies data into HTTP request. since we use 'withCredentials:true'.
+      // then, Server will expire this 'JWT token' from Cookies.
+      await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
+
+      dispatch(removeUser()); // dispatch an action - removes user from redux store
+
+      navigate("/login"); // navigate to Login path
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   // DaisyUI component - navbar
   return (
@@ -50,7 +71,9 @@ const Navbar = () => {
                   <Link>Settings</Link>
                 </li>
                 <li>
-                  <Link>Logout</Link>
+                  <Link to="" onClick={handleLogout}>
+                    Logout
+                  </Link>
                 </li>
               </ul>
             </div>
