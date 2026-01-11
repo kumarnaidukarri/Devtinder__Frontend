@@ -3,8 +3,11 @@ import { configureStore } from "@reduxjs/toolkit";
 
 // Slices
 import userReducer from "./userSlice.js";
+import feedReducer from "./feedSlice.js";
 
-const appStore = configureStore({ reducer: { user: userReducer } }); // it creates a store with given Slices
+const appStore = configureStore({
+  reducer: { user: userReducer, feed: feedReducer },
+}); // it creates a store with given Slices
 /*
 configureStore({
    reducer : {
