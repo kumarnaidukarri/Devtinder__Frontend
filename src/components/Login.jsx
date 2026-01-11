@@ -10,6 +10,7 @@ const Login = () => {
   // local state variables
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const dispatch = useDispatch(); // useDispatch() hook used to dispatch an Action
   const navigate = useNavigate(); // useNavigate() hook used to Navigate between Paths(routes/pages) in URL programmatically.
@@ -35,8 +36,8 @@ const Login = () => {
 
       navigate("/"); // Navigate to another Path
     } catch (err) {
-      console.log("my custom error here:");
-      console.error(err);
+      setErrorMessage(err?.response?.data || "Something went wrong!"); // update state variable
+      console.error("my custom error :- ", err, err?.response?.data);
     }
   };
 
@@ -73,6 +74,7 @@ const Login = () => {
               />
             </fieldset>
           </div>
+          <p className="error-message  text-red-500">{errorMessage}</p>
           <div className="card-actions justify-center mt-4">
             <button className="btn btn-primary" onClick={handleLogin}>
               Login
