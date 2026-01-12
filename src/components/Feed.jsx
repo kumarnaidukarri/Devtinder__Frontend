@@ -6,6 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../utils/constants"; // hard coded url
 import { addFeed } from "../utils/store/feedSlice"; // Actions from redux
 
+// my components
+import UserCard from "./UserCard.jsx";
+
 const Feed = () => {
   const feed = useSelector((appStore) => {
     return appStore.feed;
@@ -33,7 +36,16 @@ const Feed = () => {
     getFeedData();
   }, []);
 
-  return <div>Feed Page</div>;
+  if (!feed) {
+    // Guard clause - if feed data is empty or null.
+    return;
+  }
+
+  return (
+    <div className="feed-container  flex justify-center my-10">
+      <UserCard user={feed[0]} />
+    </div>
+  );
 };
 
 export default Feed;
