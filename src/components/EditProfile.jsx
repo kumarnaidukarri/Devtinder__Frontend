@@ -1,9 +1,12 @@
 // 'EditProfile' component is used in 'Profile' Component.
-
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import axios from "axios";
 
 // my components
 import UserCard from "./UserCard.jsx";
+import { BASE_URL } from "../utils/constants.js";
+import { addUser } from "../utils/store/userSlice.js"; // action from redux
 
 const EditProfile = ({ user }) => {
   // local state variables
@@ -14,6 +17,27 @@ const EditProfile = ({ user }) => {
   const [gender, setGender] = useState(user?.gender || "male");
   const [about, setAbout] = useState(user.about);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const dispatch = useDispatch();
+
+  // event handler
+  const saveProfile = async () => {
+    // Clear Errors msg on UI before 'Saving Profile'
+    setErrorMessage("");
+
+    try {
+      const res = await axios.patch(
+        BASE_URL + "/profile/edit",
+        { firstName, lastName, photoUrl, age, gender, about },
+        { withCredentials: true }
+      ); // API call and Updates data in Backend
+      const updatedUser = res?.data?.data;
+
+      dispatch(addUser(updatedUser)); // dispatch an action - updates data in store
+    } catch (err) {
+      setErrorMessage(err.response.data);
+    }
+  };
 
   return (
     <div className="edit-profile-container  flex justify-center flex-wrap my-10">
@@ -99,11 +123,14 @@ const EditProfile = ({ user }) => {
             </div>
             <p className="error-message  text-red-500">{errorMessage}</p>
             <div className="card-actions justify-center mt-4">
-              <button className="btn btn-primary">Save Profile</button>
+              <button className="btn btn-primary" onClick={saveProfile}>
+                Save Profile
+              </button>
             </div>
           </div>
         </div>
       </div>
+
       {/*  */}
       <UserCard user={{ firstName, lastName, photoUrl, age, gender, about }} />
     </div>
