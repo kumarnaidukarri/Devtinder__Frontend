@@ -106,28 +106,30 @@ const EditProfile = ({ user }) => {
                   />
                 </fieldset>
                 <fieldset className="fieldset mt-2">
-                  <legend className="fieldset-legend"> Gender: </legend>
-                  <input
-                    type="text"
-                    className="input"
-                    placeholder=""
-                    value={gender}
+                  <legend className="fieldset-legend">Gender:</legend>
+                  <select
+                    defaultValue={gender}
                     onChange={(event) => {
-                      setGender(event.target.value);
+                      setGender(event.target.value); // updates 'gender' state variable
                     }}
-                  />
+                    className="select"
+                  >
+                    <option disabled={true}>Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="others">Others</option>
+                  </select>
                 </fieldset>
                 <fieldset className="fieldset mt-2">
-                  <legend className="fieldset-legend"> About: </legend>
-                  <input
-                    type="text"
-                    className="input"
+                  <legend className="fieldset-legend">About:</legend>
+                  <textarea
+                    className="textarea h-24"
                     placeholder=""
                     value={about}
                     onChange={(event) => {
-                      setAbout(event.target.value);
+                      setAbout(event.target.value); // updates 'about' state variable
                     }}
-                  />
+                  ></textarea>
                 </fieldset>
               </div>
               <p className="error-message  text-red-500">{errorMessage}</p>
