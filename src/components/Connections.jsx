@@ -1,6 +1,6 @@
 // Connections.jsx component contains 'all connections' of the user.
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 // my components
@@ -9,6 +9,7 @@ import { addConnections } from "../utils/store/connectionsSlice.js"; // Action f
 
 const Connections = () => {
   const dispatch = useDispatch();
+  const connectionsUsersArr = useSelector((appStore) => appStore.connections); // Subscribes to the 'Connections' Slice of Redux Store
 
   const fetchConnections = async () => {
     try {
@@ -27,7 +28,50 @@ const Connections = () => {
     fetchConnections();
   }, []); // runs only once. after initial first render
 
-  return <div>Connections Page</div>;
+  // U.I
+  if (!connectionsUsersArr) {
+    // if connections is null. i.e, API call failure or no data
+    return;
+  }
+  if (connectionsUsersArr.length === 0) {
+    // if connections is empty. i.e, no one sent
+    return <h1> No Connections Found </h1>;
+  }
+
+  return (
+    <div className="my-10 text-center">
+      <h1 className="font-bold text-3xl"> Connections Page </h1>
+      <div className="connections-container  mt-8">
+        {connectionsUsersArr.map((connectionUser) => {
+          const { firstName, lastName, age, gender, photoUrl, about } =
+            connectionUser;
+          return (
+            <div className="connection-container  flex  m-4 p-4 bg-base-300 rounded-lg  w-1/2 mx-auto">
+              <div className="image-container">
+                <img
+                  src={photoUrl}
+                  className="w-20 h-20 rounded-full"
+                  alt="user photo"
+                />
+              </div>
+              <div className="content-container  text-left mx-4">
+                <h2 className="font-bold text-xl">
+                  {firstName + " " + lastName}
+                </h2>
+                {
+                  /* if age and gender exists. then only show it */
+                  age && gender && (
+                    <p className="mt-1"> {age + ", " + gender} </p>
+                  )
+                }
+                <p className="mt-1">{about}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 };
 
 export default Connections;
