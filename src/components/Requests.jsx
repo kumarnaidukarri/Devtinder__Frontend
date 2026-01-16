@@ -11,6 +11,22 @@ const Requests = () => {
   const dispatch = useDispatch();
   const requestsArr = useSelector((appStore) => appStore.requests); // Subscribes to the 'Requests' Slice of Redux Store
 
+  // Event handler
+  const reviewRequest = async (status, _id) => {
+    try {
+      /* status = 'accepted' or 'rejected'.  _id means 'request id'.
+         Others have sent you requests, accept or reject them . */
+      const res = await axios.post(
+        BASE_URL + "/request/review/" + status + "/" + _id,
+        {},
+        { withCredentials: true }
+      );
+      console.log(res);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const fetchRequests = async () => {
     try {
       const res = await axios.get(BASE_URL + "/user/requests/received", {
@@ -35,7 +51,7 @@ const Requests = () => {
   }
   if (requestsArr.length === 0) {
     // if requests is empty. i.e, no one sent
-    return <h1> No Requests Found </h1>;
+    return <h1 className="text-center my-10"> No Requests Found </h1>;
   }
 
   return (
@@ -46,11 +62,11 @@ const Requests = () => {
           /* using Map, iterate on each request object */
           requestsArr.map((requestObj) => {
             const { _id, firstName, lastName, age, gender, photoUrl, about } =
-              requestObj.fromUserId;
+              requestObj.fromUserId; // Destructing
             return (
               <div
                 key={_id}
-                className="request-container  flex  m-4 p-4 bg-base-300 rounded-lg  w-1/2 mx-auto"
+                className="request-container  flex justify-between items-center  m-4 p-4 bg-base-300 rounded-lg  w-2/3 mx-auto"
               >
                 <div className="image-container">
                   <img
@@ -70,6 +86,25 @@ const Requests = () => {
                     )
                   }
                   <p className="mt-1">{about}</p>
+                </div>
+                <div className="buttons-container">
+                  {/* DaisyUI button components */}
+                  <button
+                    className="btn btn-secondary mx-2"
+                    onClick={() => {
+                      reviewRequest("accepted", requestObj._id);
+                    }}
+                  >
+                    Accept
+                  </button>
+                  <button
+                    className="btn btn-primary mx-2"
+                    onClick={() => {
+                      reviewRequest("rejected", requestObj._id);
+                    }}
+                  >
+                    Reject
+                  </button>
                 </div>
               </div>
             );
