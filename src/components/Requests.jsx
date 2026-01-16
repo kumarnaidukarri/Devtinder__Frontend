@@ -5,7 +5,7 @@ import axios from "axios";
 
 // my components
 import { BASE_URL } from "../utils/constants.js";
-import { addRequests } from "../utils/store/requestsSlice.js"; // Action from 'Requests Slice' of Redux Store
+import { addRequests, removeRequest } from "../utils/store/requestsSlice.js"; // Actions from 'Requests Slice' of Redux Store
 
 const Requests = () => {
   const dispatch = useDispatch();
@@ -22,6 +22,9 @@ const Requests = () => {
         { withCredentials: true }
       );
       console.log(res);
+
+      // i.e, after accepted or rejected connection request. it has to deleted from 'Requests Page'
+      dispatch(removeRequest(_id)); // Dispatch an action - remove the 'current request' from Requests page
     } catch (err) {
       console.error(err);
     }
