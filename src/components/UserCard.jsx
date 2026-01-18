@@ -1,8 +1,31 @@
 // UserCard Component.   n user cards are shown in the 'Feed' component.
 
+import { useDispatch } from "react-redux";
+import axios from "axios";
+
+// my components
+import { BASE_URL } from "../utils/constants.js";
+import { removeUserFromFeed } from "../utils/store/feedSlice.js"; // Action from Feed Slice of Redux store
+
 const UserCard = ({ user }) => {
-  const { firstName, lastName, photoUrl, about, skills, _id, age, gender } =
+  const { _id, firstName, lastName, photoUrl, about, skills, age, gender } =
     user;
+
+  const dispatch = useDispatch();
+
+  // Event handler
+  const handleSendRequest = async (status, userId) => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/request/send/" + status + "/" + userId,
+        {},
+        { withCredentials: true },
+      );
+      dispatch(removeUserFromFeed(userId)); // Dispatch an action - remove the user from feed
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   // DaisyUI component - Card
   return (
@@ -24,8 +47,22 @@ const UserCard = ({ user }) => {
         }
         <p>{about || "about me no data ..."}</p>
         <div className="card-actions justify-center  my-4">
-          <button className="btn btn-secondary">Interested</button>
-          <button className="btn btn-primary">Ignore</button>
+          <button
+            className="btn btn-secondary"
+            onClick={() => {
+              handleSendRequest("interested", _id);
+            }}
+          >
+            Interested
+          </button>
+          <button
+            className="btn btn-primary"
+            onClick={() => {
+              handleSendRequest("ignored", _id);
+            }}
+          >
+            Ignore
+          </button>
         </div>
       </div>
     </div>

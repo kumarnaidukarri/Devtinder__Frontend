@@ -41,6 +41,11 @@ const Feed = () => {
     return;
   }
 
+  if (feed.length <= 0) {
+    //  if feed is empty.
+    return <h1> No Feed or No New Users Found! </h1>;
+  }
+
   return (
     <div className="feed-container  flex justify-center my-10">
       <UserCard user={feed[0]} />
