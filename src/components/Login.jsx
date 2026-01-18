@@ -11,6 +11,10 @@ const Login = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  // signup form - state variables
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [isLoginForm, setIsLoginForm] = useState(true);
 
   const dispatch = useDispatch(); // useDispatch() hook used to dispatch an Action
   const navigate = useNavigate(); // useNavigate() hook used to Navigate between Paths(routes/pages) in URL programmatically.
@@ -40,16 +44,49 @@ const Login = () => {
       console.error("my custom error :- ", err, err?.response?.data);
     }
   };
+  const handleSignup = async () => {};
 
   return (
     <div className="card-container  flex justify-center my-10">
       {/* DaisyUI component - Card with no image */}
       <div className="card bg-base-300 w-96 shadow-sm">
         <div className="card-body">
-          <h2 className="card-title justify-center">Login</h2>
+          <h2 className="card-title justify-center">
+            {isLoginForm ? "Login" : "Signup"}
+          </h2>
           <div>
             {/* daisyui components - Input with fieldset and legend */}
-            <fieldset className="fieldset">
+            {/* signup data start */}
+            {!isLoginForm ? (
+              <>
+                <fieldset className="fieldset mt-2">
+                  <legend className="fieldset-legend"> First Name </legend>
+                  <input
+                    type="text"
+                    className="input"
+                    placeholder=""
+                    value={firstName}
+                    onChange={(event) => {
+                      setFirstName(event.target.value);
+                    }}
+                  />
+                </fieldset>
+                <fieldset className="fieldset mt-2">
+                  <legend className="fieldset-legend"> Last Name </legend>
+                  <input
+                    type="text"
+                    className="input"
+                    placeholder=""
+                    value={lastName}
+                    onChange={(event) => {
+                      setLastName(event.target.value);
+                    }}
+                  />
+                </fieldset>
+              </>
+            ) : null}
+            {/* signup data end */}
+            <fieldset className="fieldset mt-2">
               <legend className="fieldset-legend"> Email ID </legend>
               <input
                 type="text"
@@ -76,10 +113,25 @@ const Login = () => {
           </div>
           <p className="error-message  text-red-500">{errorMessage}</p>
           <div className="card-actions justify-center mt-4">
-            <button className="btn btn-primary" onClick={handleLogin}>
-              Login
+            <button
+              className="btn btn-primary"
+              onClick={isLoginForm ? handleLogin : handleSignup}
+            >
+              {isLoginForm ? "Login" : "Signup"}
             </button>
           </div>
+
+          {/* SWITCH login form or signup form */}
+          <p
+            className="mx-auto mt-4 underline hover:cursor-pointer"
+            onClick={() => {
+              setIsLoginForm((value) => !value);
+            }}
+          >
+            {isLoginForm
+              ? "New User ? Signup here"
+              : "Existing User ? Login here"}
+          </p>
         </div>
       </div>
     </div>
