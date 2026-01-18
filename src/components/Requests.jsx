@@ -19,9 +19,8 @@ const Requests = () => {
       const res = await axios.post(
         BASE_URL + "/request/review/" + status + "/" + _id,
         {},
-        { withCredentials: true }
+        { withCredentials: true },
       );
-      console.log(res);
 
       // i.e, after accepted or rejected connection request. it has to deleted from 'Requests Page'
       dispatch(removeRequest(_id)); // Dispatch an action - remove the 'current request' from Requests page

@@ -43,7 +43,9 @@ const Feed = () => {
 
   if (feed.length <= 0) {
     //  if feed is empty.
-    return <h1> No Feed or No New Users Found! </h1>;
+    return (
+      <h1 className="text-center mt-4">No Feed data - no new users found !</h1>
+    );
   }
 
   return (

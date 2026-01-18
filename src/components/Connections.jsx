@@ -35,7 +35,7 @@ const Connections = () => {
   }
   if (connectionsUsersArr.length === 0) {
     // if connections is empty. i.e, no one sent
-    return <h1> No Connections Found </h1>;
+    return <h1 className="text-center mt-4"> No Connections Found </h1>;
   }
 
   return (

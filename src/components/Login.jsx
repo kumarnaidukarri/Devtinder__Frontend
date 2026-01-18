@@ -24,13 +24,13 @@ const Login = () => {
           emailId,
           password,
         },
-        { withCredentials: true }
+        { withCredentials: true },
       );
       /* Note:
          Axios config object "{withCredentials:true}" must be used when making HTTP Requests.
          it tells Axios to send Cookies(browser to server) and accept Cookies(sent by server).
       */
-      console.log("Api call success. data: ", res.data);
+      console.log("Api call login success. data: ", res.data);
 
       dispatch(addUser(res.data)); // Dispatches an Action
 

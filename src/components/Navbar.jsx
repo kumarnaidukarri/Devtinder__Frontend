@@ -7,7 +7,7 @@ import { removeUser } from "../utils/store/userSlice"; // Action from redux stor
 
 const Navbar = () => {
   const user = useSelector((appStore) => appStore.user); // Subscribes to 'User Slice'(specific portion) of Redux Store.
-  console.log(user);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
