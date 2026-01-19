@@ -44,7 +44,25 @@ const Login = () => {
       console.error("my custom error :- ", err, err?.response?.data);
     }
   };
-  const handleSignup = async () => {};
+
+  const handleSignup = async () => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/signup",
+        { firstName, lastName, emailId, password },
+        { withCredentials: true },
+      ); // API call
+      const savedUser = res.data.data;
+
+      dispatch(addUser(savedUser)); // Dispatches an Action
+
+      // first time after User Signup - User must be redirect to Profile page instead of Login Page
+      navigate("/profile"); // Navigate to another Path
+    } catch (err) {
+      setErrorMessage(err?.response?.data || "Something went wrong!"); // update state variable
+      console.error("my custom error :- ", err, err?.response?.data);
+    }
+  };
 
   return (
     <div className="card-container  flex justify-center my-10">
