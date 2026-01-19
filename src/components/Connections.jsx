@@ -39,7 +39,7 @@ const Connections = () => {
   }
 
   return (
-    <div className="my-10 text-center">
+    <div className="my-10 mb-36 text-center">
       <h1 className="font-bold text-3xl"> Connections Page </h1>
       <div className="connections-container  mt-8">
         {connectionsUsersArr.map((connectionUser) => {
@@ -48,7 +48,7 @@ const Connections = () => {
           return (
             <div
               key={_id}
-              className="connection-container  flex  m-4 p-4 bg-base-300 rounded-lg  w-1/2 mx-auto"
+              className="connection-container  flex gap-4 flex-wrap  m-4 p-4 bg-base-300 rounded-lg mx-auto  w-3/4 md:w-1/2"
             >
               <div className="image-container">
                 <img

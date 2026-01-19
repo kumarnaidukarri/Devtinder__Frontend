@@ -68,9 +68,9 @@ const Requests = () => {
             return (
               <div
                 key={_id}
-                className="request-container  flex justify-between items-center  m-4 p-4 bg-base-300 rounded-lg  w-2/3 mx-auto"
+                className="request-container  flex justify-between items-center gap-4 flex-wrap  m-4 p-4 bg-base-300 rounded-lg  w-full md:w-1/3 mx-auto"
               >
-                <div className="image-container">
+                <div className="image-container mx-auto sm:mx-0">
                   <img
                     src={photoUrl}
                     className="w-20 h-20 rounded-full"
