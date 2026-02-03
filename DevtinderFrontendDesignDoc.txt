@@ -42,3 +42,9 @@ Technologies :-
 */
 
 // The END
+
+
+// Premium Page Component and Payment Gateway Integration :-
+   Buy Plans:
+   Silver plan - some features
+   Gold   plan - more cool featues to user.
