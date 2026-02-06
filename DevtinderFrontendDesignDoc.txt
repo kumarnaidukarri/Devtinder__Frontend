@@ -48,3 +48,8 @@ Technologies :-
    Buy Plans:
    Silver plan - some features
    Gold   plan - more cool features to user.
+
+   Flow:
+   Buy now(gold or silver) -> Backend API call -> Create Order(Razorpay Server call returns Order Object) ->
+   Backend Server sends response(Order object, Razorpay_KeyId) to the Frontend.
+   -> Frontend will open 'Razorpay Payment Dialog Checkout Box'.
