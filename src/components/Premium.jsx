@@ -1,6 +1,21 @@
 // Premium Component used to show Buy 'Membership Plans' using 'Payment Gateway'.
 
+import axios from "axios";
+import { BASE_URL } from "../utils/constants.js";
+
 const Premium = () => {
+  // Event handlers
+  const handleBuyClick = async (type) => {
+    const order = await axios.post(
+      BASE_URL + "/payment/create",
+      { membershipType: type },
+      { withCredentials: true },
+    ); // API call to create an 'Order'
+    console.log(order);
+
+    // It Should open the 'Razorpay Dialog Checkout Box'
+  };
+
   return (
     <div>
       <h1 className="my-4 mb-8"> Premium Page </h1>
@@ -15,7 +30,12 @@ const Premium = () => {
             <li> - No Blue tick mark </li>
             <li> - 1 Month </li>
           </ul>
-          <button className="btn btn-secondary"> Buy Silver </button>
+          <button
+            className="btn btn-secondary"
+            onClick={() => handleBuyClick("silver")}
+          >
+            Buy Silver
+          </button>
         </div>
 
         <div className="divider divider-horizontal">OR</div>
@@ -28,7 +48,12 @@ const Premium = () => {
             <li> - Blue tick mark </li>
             <li> - 3 Months </li>
           </ul>
-          <button className="btn btn-primary"> Buy Gold </button>
+          <button
+            className="btn btn-primary"
+            onClick={() => handleBuyClick("gold")}
+          >
+            Buy Gold
+          </button>
         </div>
       </div>
     </div>
