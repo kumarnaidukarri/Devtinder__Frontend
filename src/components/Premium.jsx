@@ -2,8 +2,25 @@
 
 import axios from "axios";
 import { BASE_URL } from "../utils/constants.js";
+import { useEffect, useState } from "react";
 
 const Premium = () => {
+  // local state variable - it shows UI based True(user already purchased membership), False(show silver/gold cards).
+  const [isUserPremium, setIsUserPremium] = useState(false);
+  useEffect(() => {
+    verifyPremiumUser();
+  }, []);
+
+  // Handler func called on successful payment by Razorpay.
+  const verifyPremiumUser = async () => {
+    const res = await axios.get(BASE_URL + "/premium/verify", {
+      withCredentials: true,
+    }); // API call
+    if (res.data.isPremium === true) {
+      setIsUserPremium(true); // update state
+    }
+  };
+
   // Event handlers
   const handleBuyClick = async (type) => {
     const order = await axios.post(
@@ -30,6 +47,8 @@ const Premium = () => {
       theme: {
         color: "#F37254",
       },
+      // 'Handler function' will runs before the 'razorpay payment dialog box' close. i.e, Payment is completed successfully, 'Handler func' is called, 'Payment Dialog box' is closed.
+      handler: verifyPremiumUser,
     };
 
     const rzp = new window.Razorpay(options);
@@ -37,7 +56,9 @@ const Premium = () => {
     /* when react app loads, the razorpay js script file in HTML file will attach its 'Razorpay Object' to the "window" object */
   };
 
-  return (
+  return isUserPremium === true ? (
+    <h1 className="m-4">You are already a Premium User.</h1>
+  ) : (
     <div>
       <h1 className="my-4 mb-8"> Premium Page </h1>
 
