@@ -1,5 +1,6 @@
 // Connections.jsx component contains 'all connections' of the user.
 import { useEffect } from "react";
+import { Link } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
@@ -69,6 +70,9 @@ const Connections = () => {
                 }
                 <p className="mt-1">{about}</p>
               </div>
+              <Link to={"/chat/" + _id}>
+                <button className="btn btn-primary"> Chat </button>
+              </Link>
             </div>
           );
         })}

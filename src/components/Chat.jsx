@@ -1,7 +1,50 @@
-// Chat.jsx componet contains 'Client Chat'
+// Chat.jsx component contains 'Client Chat'
+
+import { useState } from "react";
+import { useParams } from "react-router";
 
 const Chat = () => {
-  return <div> Chat Page </div>;
+  const params = useParams(); // 'useParams' Hook used to access 'Path Parameters' of URL.
+  const { targetUserId } = params; // URL  ->  "/chat/:targetUserId"  ->  "/chat/123"   ex:params.targetUserId
+  const [messages, setMessages] = useState([{ text: "Hello World" }]); // local state variable
+
+  return (
+    <div className="w-1/2 mx-auto border border-gray-600 m-5 h-[70vh]  flex flex-col">
+      <h1 className="p-5 border-b border-gray-600">Chat</h1>
+
+      <div className="p-5 flex-1 overflow-scroll">
+        {/* Display Messages  -  'Map()' loops on 'Array of Messages' */}
+        {messages.map((msg, index) => {
+          /*
+          return (
+            <div key={index} className="">
+              {msg.text}
+            </div>
+          );
+          */
+          // Daisy UI component - Chat Bubble(chat with header footer)
+          return (
+            <div key={index} className="chat chat-start">
+              <div className="chat-header">
+                Kumar
+                <time className="text-xs opacity-50">2 hours ago</time>
+              </div>
+              <div className="chat-bubble">You were the Chosen One!</div>
+              <div className="chat-footer opacity-50">Seen</div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="p-5 border-t border-gray-600  flex items-center gap-2">
+        <input
+          className="flex-1  border border-gray-500 rounded text-white p-2"
+          name="hello"
+        />
+        <button className="btn btn-secondary"> Send </button>
+      </div>
+    </div>
+  );
 };
 
 export default Chat;
