@@ -1,12 +1,32 @@
 // Chat.jsx component contains 'Client Chat'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+
+// my modules
+import { createSocketConnection } from "../utils/socket.js";
 
 const Chat = () => {
   const params = useParams(); // 'useParams' Hook used to access 'Path Parameters' of URL.
-  const { targetUserId } = params; // URL  ->  "/chat/:targetUserId"  ->  "/chat/123"   ex:params.targetUserId
+  const { targetUserId } = params; // URL  ->  "/chat/:targetUserId"  ->  "/chat/123"  ex:params.targetUserId
   const [messages, setMessages] = useState([{ text: "Hello World" }]); // local state variable
+
+  useEffect(() => {
+    // *** when component loads, Create a Socket Connection and Emit or send the 'Event'.
+    const socket = createSocketConnection();
+    socket.emit("eventName", "data"); // event calling
+    // emit(event,data). Assume Understand it like API calling, API call(path,data)  =  emit(path,data).
+    /* Socket Events Emitting(emit()):
+        we configure some Events(with handler functions) in 'Socket.io Backend Server'.
+        now we connect to backend and call those Events using emit().
+    */
+
+    // *** Cleanup Func - when component unmount, Disconnect the Socket.
+    return () => {
+      socket.disconnect();
+      console.log("Disconnect the Socket"); // Disconnect the Socket Connection.
+    };
+  }, []);
 
   return (
     <div className="w-1/2 mx-auto border border-gray-600 m-5 h-[70vh]  flex flex-col">
@@ -48,16 +68,3 @@ const Chat = () => {
 };
 
 export default Chat;
-
-//
-/*
-Web Sockets :-
- Web Sockets are a concept used to enable Real-time Communication. it is a Protocol.
- Bi-Directional" communication: 2 way communication. i.e, Both Client and Server can send data at any time.
- a server can connect with multiple clients and communicate each other.
- Web socket connections can be established using: HTTP Long-Polling, WebSocket Protocol, WebTransport.
-
-"Socket.IO" Library :-
- it is a JavaScript library built on top of 'Web Socket' and fallback techniques.
- it enables 'low-latency', 'bi-directional', 'event-based' communication between client and server.
-*/

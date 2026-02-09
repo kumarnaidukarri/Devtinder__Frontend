@@ -53,3 +53,7 @@ Technologies :-
    Buy now(gold or silver) -> Backend API call -> Create Order(Razorpay Server call returns Order Object) ->
    Backend Server sends response(Order object, Razorpay_KeyId) to the Frontend.
    -> Frontend will open 'Razorpay Payment Dialog Checkout Box'.
+
+
+// Socket.IO library
+  Realtime chatting feature using Web Sockets.
