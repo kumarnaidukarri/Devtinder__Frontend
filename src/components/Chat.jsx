@@ -10,7 +10,7 @@ import { createSocketConnection } from "../utils/socket.js";
 const Chat = () => {
   const params = useParams(); // 'useParams' Hook used to access 'Path Parameters' of URL.
   const { targetUserId } = params; // URL  ->  "/chat/:targetUserId"  ->  "/chat/123"  ex: params.targetUserId = "123"
-  const [messages, setMessages] = useState([{ text: "Hello World" }]); // local state variable
+  const [messages, setMessages] = useState([]); // local state variable
   const [newMessage, setNewMessage] = useState("");
 
   const userData = useSelector((appStore) => appStore.user); // Subscribes to User slice of Redux store.
@@ -30,12 +30,32 @@ const Chat = () => {
         now we connect to backend and call those Events using emit().
     */
 
+    // Socket Event - to listen for 'receiveMessage' event in frontend. backend emits/calls this event.
+    socket.on("messageReceived", ({ firstName, text }) => {
+      console.log(
+        "'messageReceived' event got Hitted in Socket Client(Frontend)",
+      );
+      setMessages((messages) => [...messages, { firstName, text }]); // Updates the State
+    });
+
     // *** Cleanup Func - when component unmount, Disconnect the Socket.
     return () => {
       socket.disconnect();
       console.log("Disconnected the Socket"); // Disconnect the Socket Connection.
     };
   }, [userId, targetUserId]);
+
+  // Socket Event - to send data to Socket Server(backend).
+  const sendMessage = () => {
+    const socket = createSocketConnection(); // creates a socket client connection.
+    socket.emit("sendMessage", {
+      firstName: userData.firstName,
+      userId,
+      targetUserId,
+      text: newMessage,
+    }); // Emitting a 'send message' event
+    setNewMessage(""); // Updates the state - Clears the input box
+  };
 
   return (
     <div className="w-1/2 mx-auto border border-gray-600 m-5 h-[70vh]  flex flex-col">
@@ -55,10 +75,10 @@ const Chat = () => {
           return (
             <div key={index} className="chat chat-start">
               <div className="chat-header">
-                Kumar
+                {msg.firstName}
                 <time className="text-xs opacity-50">2 hours ago</time>
               </div>
-              <div className="chat-bubble">You were the Chosen One!</div>
+              <div className="chat-bubble">{msg.text}</div>
               <div className="chat-footer opacity-50">Seen</div>
             </div>
           );
@@ -74,7 +94,14 @@ const Chat = () => {
             (e) => setNewMessage(e.target.value) // Updating state
           }
         />
-        <button className="btn btn-secondary"> Send </button>
+        <button
+          className="btn btn-secondary"
+          onClick={() => {
+            sendMessage();
+          }}
+        >
+          Send
+        </button>
       </div>
     </div>
   );
