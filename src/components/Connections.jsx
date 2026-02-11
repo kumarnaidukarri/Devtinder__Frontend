@@ -11,6 +11,7 @@ import { addConnections } from "../utils/store/connectionsSlice.js"; // Action f
 const Connections = () => {
   const dispatch = useDispatch();
   const connectionsUsersArr = useSelector((appStore) => appStore.connections); // Subscribes to the 'Connections' Slice of Redux Store
+  const userData = useSelector((appStore) => appStore.user); // Subscribes to the 'User' Slice of Redux Store
 
   const fetchConnections = async () => {
     try {
@@ -49,7 +50,7 @@ const Connections = () => {
           return (
             <div
               key={_id}
-              className="connection-container  flex gap-4 flex-wrap  m-4 p-4 bg-base-300 rounded-lg mx-auto  w-3/4 md:w-1/2"
+              className="connection-container  flex gap-4 justify-center items-center flex-wrap   m-4 p-4 bg-base-300 rounded-lg mx-auto  w-3/4 md:w-1/2  lg:justify-start"
             >
               <div className="image-container">
                 <img
@@ -70,9 +71,16 @@ const Connections = () => {
                 }
                 <p className="mt-1">{about}</p>
               </div>
-              <Link to={"/chat/" + _id}>
-                <button className="btn btn-primary"> Chat </button>
-              </Link>
+              {
+                /* if user brought 'Premium Membership'. then, only show Chat button. */
+                userData.isPremium === true ? (
+                  <div className="button-container mx-auto xl:ml-auto xl:mr-12 ">
+                    <Link to={"/chat/" + _id}>
+                      <button className="btn btn-primary"> Chat </button>
+                    </Link>
+                  </div>
+                ) : null
+              }
             </div>
           );
         })}

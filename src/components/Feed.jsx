@@ -1,5 +1,5 @@
 // Feed component
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,6 +14,7 @@ const Feed = () => {
     return appStore.feed;
   }); // Subscribing to 'Feed Slice' of Redux Store
   const dispatch = useDispatch();
+  const [currentFeedPosition, setCurrentFeedPosition] = useState(0);
 
   // Async func to get data
   const getFeedData = async () => {
@@ -49,8 +50,20 @@ const Feed = () => {
   }
 
   return (
-    <div className="feed-container  flex justify-center my-10">
-      <UserCard user={feed[0]} />
+    <div className="feed-container  flex flex-col justify-center items-center gap-4 my-10">
+      <UserCard user={feed[currentFeedPosition]} />
+      <div className="button-container">
+        <button
+          className="btn btn-success"
+          onClick={() => {
+            setCurrentFeedPosition((currentValue) =>
+              currentValue + 1 === feed.length ? 0 : currentValue + 1,
+            );
+          }}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

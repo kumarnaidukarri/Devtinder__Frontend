@@ -54,6 +54,9 @@ Technologies :-
    Backend Server sends response(Order object, Razorpay_KeyId) to the Frontend.
    -> Frontend will open 'Razorpay Payment Dialog Checkout Box'.
 
+// Based on 'Premium Membership' status. Chat button will show.
+   Pagination in Feed Page(Next button).
+   Responsive Design Tweaks.
 
 // Socket.IO library
   Realtime chatting feature using Web Sockets.

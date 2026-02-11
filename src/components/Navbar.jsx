@@ -74,6 +74,9 @@ const Navbar = () => {
                   <Link to="/requests"> Requests </Link>
                 </li>
                 <li>
+                  <Link to="/"> Feed Page </Link>
+                </li>
+                <li>
                   <Link to="/premium"> Buy Premium Plans </Link>
                 </li>
                 <li>
