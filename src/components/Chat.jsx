@@ -1,4 +1,4 @@
-// Chat.jsx component contains 'Client Chat'
+// Chat.jsx contains 'Client Chat' Component
 
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
@@ -21,8 +21,10 @@ const Chat = () => {
       return;
     }
 
-    // *** when component loads, Create a Socket Client Connection. then, Emits an event 'joinChat'.
+    // *** when component loads, Create a Socket Client Connection.
     const socket = createSocketConnection();
+
+    // Emit an Event - 'joinChat' private room.
     socket.emit("joinChat", { userId, targetUserId }); // Event calling - 'joinChat event' tells backend to join/create a private between 2 users.
     // emit(event,data). Assume Understand it like API calling, API call(path,data)  =  emit(path,data).
     /* Socket Events Emitting(emit()):
@@ -30,7 +32,7 @@ const Chat = () => {
         now we connect to backend and call those Events using emit().
     */
 
-    // Socket Event - to listen for 'receiveMessage' event in frontend. backend emits/calls this event.
+    // Socket Event - listen for incoming messages from backend . i.e, backend calls this event 'messageReceived'.
     socket.on("messageReceived", ({ firstName, text }) => {
       console.log(
         "'messageReceived' event got Hitted in Socket Client(Frontend)",
@@ -41,7 +43,7 @@ const Chat = () => {
     // *** Cleanup Func - when component unmount, Disconnect the Socket.
     return () => {
       socket.disconnect();
-      console.log("Disconnected the Socket"); // Disconnect the Socket Connection.
+      console.log("!!! Disconnected the Socket"); // Disconnect the Socket Connection.
     };
   }, [userId, targetUserId]);
 
