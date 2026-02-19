@@ -63,3 +63,28 @@ Technologies :-
 
 
 -------- The END Completed -------
+
+
+*****
+Vercel Deployment Problem(page reload) :-
+ you refreshed a client-side route -> vercel looked for a physical file in dist folder -> file didn't exist -> returned 404 error.
+ Reloaded Page gives Error '404 NOT FOUND' after Vercel deployment platform.
+ 1) when you open deployed website normally:
+    Vercel serves 'index.html'. React loads and React-Router handles routes like '/feed', '/profile'.
+    everything works fine.
+ 2) when reload the website URL:
+    *** Vercel thinks 'user is requesting a file' called '/feed' or '/profile' in 'dist folder'.
+    since there is no physical file named 'feed or profile' in dist.
+    vercel says '404: Not_Found'.
+ Note:
+    vite dev server automatically handle this. when run Locally(Local Host). on page reload, vite serves index.html for any route. React-Router handles the route on client-side.
+    vercel don't do that automatically. vercel is 'static file server', which servers real files unless told using 'vercel.json' config file.
+
+ Fix:
+  create a 'vercel.json' config file in root directory. it tells Vercel to always serve index.html for any Route.
+  vercel.json :-
+    { "rewrites": [{ "source": "/(.*)", "destination": "/" }]}
+
+
+ Definitions :-
+ Single Page Application : there is one HTML file(index.html). all Routing is handled client-side using libraries like 'React-Router'.
